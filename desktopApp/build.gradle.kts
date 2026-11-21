@@ -35,6 +35,8 @@ compose.desktop {
             packageName = "Rillvoro"
             macOS {
                 bundleID = RILLVORO_APPLICATION_ID
+                // macOS jpackage requires a positive leading version component.
+                packageVersion = RILLVORO_VERSION_CODE.toString()
                 iconFile.set(iconAssets.file("rillvoro_icon.icns"))
             }
             windows { iconFile.set(iconAssets.file("rillvoro_icon.ico")) }
