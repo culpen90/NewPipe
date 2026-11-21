@@ -7,7 +7,7 @@
 
     <application>
         <activity
-            android:name="net.newpipe.app.ComposeActivity"
+            android:name="io.github.culpen90.rillvoro.shared.ComposeActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>

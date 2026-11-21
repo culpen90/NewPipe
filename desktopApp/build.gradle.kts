@@ -20,14 +20,29 @@ dependencies {
     implementation(libs.jetbrains.compose.preview)
 }
 
+val iconAssets = rootProject.layout.projectDirectory.dir("assets")
+
+tasks.processResources {
+    from(iconAssets.file("rillvoro_icon.png"))
+}
+
 compose.desktop {
     application {
-        mainClass = "net.newpipe.app.MainKt"
+        mainClass = "io.github.culpen90.rillvoro.shared.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = NEWPIPE_APPLICATION_ID_NEW
-            packageVersion = NEWPIPE_VERSION_NAME
+            packageName = "Rillvoro"
+            macOS {
+                bundleID = RILLVORO_APPLICATION_ID
+                iconFile.set(iconAssets.file("rillvoro_icon.icns"))
+            }
+            windows { iconFile.set(iconAssets.file("rillvoro_icon.ico")) }
+            linux {
+                packageName = "rillvoro"
+                iconFile.set(iconAssets.file("rillvoro_icon.png"))
+            }
+            packageVersion = RILLVORO_VERSION_NAME
         }
     }
 }

@@ -1,0 +1,15 @@
+package io.github.culpen90.rillvoro.util.debounce;
+
+import io.github.culpen90.rillvoro.error.ErrorInfo;
+
+public interface DebounceSavable {
+
+    /**
+     * Execute operations to save the data. <br>
+     * Must set {@link DebounceSaver#setIsModified(boolean)} false in this method manually
+     * after the data has been saved.
+     */
+    void saveImmediate();
+
+    void showError(ErrorInfo errorInfo);
+}

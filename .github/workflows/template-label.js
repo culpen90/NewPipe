@@ -17,13 +17,14 @@ module.exports = async ({github, context}) => {
     const isPR = !!context.payload.pull_request;
     const number = isPR ? context.payload.pull_request.number : context.payload.issue.number;
 
+    const templateRoot = `https://raw.githubusercontent.com/${context.repo.owner}/${context.repo.repo}/refs/heads/${context.payload.repository.default_branch}/.github`;
     let templateInfo;
     if (isPR) {
-        templateInfo = await fetchTemplateAndGenerateComment('Raw template', 'https://raw.githubusercontent.com/TeamNewPipe/NewPipe/refs/heads/dev/.github/PULL_REQUEST_TEMPLATE.md', false);
+        templateInfo = await fetchTemplateAndGenerateComment('Raw template', `${templateRoot}/PULL_REQUEST_TEMPLATE.md`, false);
     } else {
         const templates = {
-            'bug report': 'https://raw.githubusercontent.com/TeamNewPipe/NewPipe/refs/heads/dev/.github/ISSUE_TEMPLATE/bug_report.yml',
-            'feature request': 'https://raw.githubusercontent.com/TeamNewPipe/NewPipe/refs/heads/dev/.github/ISSUE_TEMPLATE/feature_request.yml'
+            'bug report': `${templateRoot}/ISSUE_TEMPLATE/bug_report.yml`,
+            'feature request': `${templateRoot}/ISSUE_TEMPLATE/feature_request.yml`
         };
 
         const templateParts = await Promise.all(Object.entries(templates).map(async ([templateName, url]) => {

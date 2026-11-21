@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
-import org.schabi.newpipe.R;
+import io.github.culpen90.rillvoro.R;
 
 import java.lang.reflect.Field;
 import java.util.List;

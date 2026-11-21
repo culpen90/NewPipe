@@ -1,0 +1,85 @@
+/*
+ * SPDX-FileCopyrightText: 2026 NewPipe e.V. <https://newpipe-ev.de>
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+package io.github.culpen90.rillvoro.shared.screen.settings
+
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.v2.runComposeUiTest
+import com.russhwolf.settings.MapSettings
+import com.russhwolf.settings.Settings
+import io.github.culpen90.rillvoro.shared.extensions.withKoin
+import io.github.culpen90.rillvoro.shared.preferences.VideoAudioPreferences.BEST_RESOLUTION
+import kotlin.test.Test
+import org.jetbrains.compose.resources.getString
+import org.koin.dsl.module
+import rillvoro.shared.generated.resources.Res
+import rillvoro.shared.generated.resources.best_resolution
+import rillvoro.shared.generated.resources.default_resolution_title
+import rillvoro.shared.generated.resources.settings_category_exoplayer_title
+import rillvoro.shared.generated.resources.settings_category_player_title
+import rillvoro.shared.generated.resources.settings_category_video_audio_title
+
+@OptIn(ExperimentalTestApi::class)
+class VideoAudioSettingsScreenTest {
+
+    private val emptySettings = module {
+        single<Settings> { MapSettings() }
+    }
+
+    @Test
+    fun rendersTitleAndResolutionRow() = runComposeUiTest {
+        withKoin(
+            modules = listOf(emptySettings),
+            content = { VideoAudioSettingsScreenContent() },
+            onContent = {
+                onNodeWithText(getString(Res.string.settings_category_video_audio_title))
+                    .assertIsDisplayed()
+                onNodeWithText(getString(Res.string.default_resolution_title)).assertIsDisplayed()
+            }
+        )
+    }
+
+    @Test
+    fun rendersPlayerCategoryHeader() = runComposeUiTest {
+        withKoin(
+            modules = listOf(emptySettings),
+            content = { VideoAudioSettingsScreenContent() },
+            onContent = {
+                onNodeWithText(getString(Res.string.settings_category_player_title))
+                    .performScrollTo()
+                    .assertIsDisplayed()
+            }
+        )
+    }
+
+    @Test
+    fun bestResolutionShowsLocalizedLabelAsSummary() = runComposeUiTest {
+        withKoin(
+            modules = listOf(emptySettings),
+            content = {
+                VideoAudioSettingsScreenContent(defaultResolution = BEST_RESOLUTION)
+            },
+            onContent = {
+                onNodeWithText(getString(Res.string.best_resolution)).assertIsDisplayed()
+            }
+        )
+    }
+
+    @Test
+    fun rendersPlayerSettingsLink() = runComposeUiTest {
+        withKoin(
+            modules = listOf(emptySettings),
+            content = { VideoAudioSettingsScreenContent() },
+            onContent = {
+                onNodeWithText(getString(Res.string.settings_category_exoplayer_title))
+                    .performScrollTo()
+                    .assertIsDisplayed()
+            }
+        )
+    }
+}

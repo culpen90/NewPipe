@@ -1,1 +1,1 @@
-撩批突朗u 安妮 急救 法拉worker 禮拜你 YouTube APi 亦只是 cần tờ website in autor 途經 information it nêds therefore this app can be used on devices without Google services installed. 阿手 你不捏 一個youtube阿卡, to you 餘 批
+Rillvoro does not use any Google framework libraries, or the YouTube API. It only parses the website in order to gain the information it needs. Therefore this app can be used on devices without Google Services installed. Also, you don't need a YouTube account to use Rillvoro, and it's FLOSS.

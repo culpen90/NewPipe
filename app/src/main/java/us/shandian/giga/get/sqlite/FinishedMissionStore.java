@@ -17,14 +17,14 @@ import java.util.Objects;
 import us.shandian.giga.get.DownloadMission;
 import us.shandian.giga.get.FinishedMission;
 import us.shandian.giga.get.Mission;
-import org.schabi.newpipe.streams.io.StoredFileHelper;
+import io.github.culpen90.rillvoro.streams.io.StoredFileHelper;
 
 /**
  * SQLite helper to store finished {@link us.shandian.giga.get.FinishedMission}'s
  */
 public class FinishedMissionStore extends SQLiteOpenHelper {
 
-    // TODO: use NewPipeSQLiteHelper ('s constants) when playlist branch is merged (?)
+    // TODO: use RillvoroSQLiteHelper ('s constants) when playlist branch is merged (?)
     private static final String DATABASE_NAME = "downloads.db";
 
     private static final int DATABASE_VERSION = 4;

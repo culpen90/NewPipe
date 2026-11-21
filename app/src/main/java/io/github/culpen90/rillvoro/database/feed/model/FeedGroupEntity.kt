@@ -1,0 +1,39 @@
+package io.github.culpen90.rillvoro.database.feed.model
+
+import androidx.room3.ColumnInfo
+import androidx.room3.Entity
+import androidx.room3.Index
+import androidx.room3.PrimaryKey
+import io.github.culpen90.rillvoro.database.feed.model.FeedGroupEntity.Companion.FEED_GROUP_TABLE
+import io.github.culpen90.rillvoro.database.feed.model.FeedGroupEntity.Companion.SORT_ORDER
+import io.github.culpen90.rillvoro.local.subscription.FeedGroupIcon
+
+@Entity(
+    tableName = FEED_GROUP_TABLE,
+    indices = [Index(SORT_ORDER)]
+)
+data class FeedGroupEntity(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = ID)
+    val uid: Long,
+
+    @ColumnInfo(name = NAME)
+    var name: String,
+
+    @ColumnInfo(name = ICON)
+    var icon: FeedGroupIcon,
+
+    @ColumnInfo(name = SORT_ORDER)
+    var sortOrder: Long = -1
+) {
+    companion object {
+        const val FEED_GROUP_TABLE = "feed_group"
+
+        const val ID = "uid"
+        const val NAME = "name"
+        const val ICON = "icon_id"
+        const val SORT_ORDER = "sort_order"
+
+        const val GROUP_ALL_ID = -1L
+    }
+}

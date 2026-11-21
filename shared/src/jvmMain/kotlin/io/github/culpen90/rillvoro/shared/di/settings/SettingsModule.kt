@@ -1,0 +1,17 @@
+/*
+ * SPDX-FileCopyrightText: 2026 NewPipe e.V. <https://newpipe-ev.de>
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+package io.github.culpen90.rillvoro.shared.di.settings
+
+import com.russhwolf.settings.PreferencesSettings
+import com.russhwolf.settings.Settings
+import java.util.prefs.Preferences
+import org.koin.core.annotation.Singleton
+
+/**
+ * Settings for JVM devices based on Java Preferences
+ */
+@Singleton
+fun provideSettings(): Settings = PreferencesSettings(Preferences.userRoot().node("io/github/culpen90/rillvoro"))

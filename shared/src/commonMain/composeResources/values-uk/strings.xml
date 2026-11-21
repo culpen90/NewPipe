@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="navigate_back">Назад</string>
-    <string name="title_activity_about">Про NewPipe</string>
+    <string name="title_activity_about">Про Rillvoro</string>
     <string name="title_licenses">Ліцензії третіх сторін</string>
     <string name="tab_about">Про нас і ЧаПи</string>
     <string name="tab_licenses">Ліцензії</string>
@@ -10,15 +10,15 @@
     <string name="contribution_encouragement">Незалежно від того, чи у вас є ідеї щодо перекладу, змін дизайну, очищення коду або серйозних доопрацювань — будь-яка допомога завжди вітається. Чим більше зроблено, тим кращим стає проєкт!</string>
     <string name="view_on_github">Переглянути на GitHub</string>
     <string name="donation_title">Підтримати</string>
-    <string name="donation_encouragement">NewPipe розробляють волонтери, які у вільний час створюють для вас найкращий користувацький досвід. Підтримайте розробників, щоб допомогти зробити NewPipe ще кращим, поки вони насолоджуються чашкою кави.</string>
+    <string name="donation_encouragement">Rillvoro розробляють волонтери, які у вільний час створюють для вас найкращий користувацький досвід. Підтримайте розробників, щоб допомогти зробити Rillvoro ще кращим, поки вони насолоджуються чашкою кави.</string>
     <string name="give_back">Віддячити</string>
     <string name="website_title">Вебсайт</string>
-    <string name="website_encouragement">Відвідайте вебсайт NewPipe, щоб дізнатися більше інформації та новин.</string>
-    <string name="privacy_policy_title">Політика конфіденційності NewPipe</string>
-    <string name="privacy_policy_encouragement">Проєкт NewPipe дуже серйозно ставиться до вашої конфіденційності. Тому застосунок не збирає жодних даних без вашої згоди.\nУ політиці конфіденційності NewPipe докладно пояснюється, які дані надсилаються та зберігаються під час надсилання звіту про збій.</string>
+    <string name="website_encouragement">Відвідайте вебсайт Rillvoro, щоб дізнатися більше інформації та новин.</string>
+    <string name="privacy_policy_title">Політика конфіденційності Rillvoro</string>
+    <string name="privacy_policy_encouragement">Проєкт Rillvoro дуже серйозно ставиться до вашої конфіденційності. Тому застосунок не збирає жодних даних без вашої згоди.\nУ політиці конфіденційності Rillvoro докладно пояснюється, які дані надсилаються та зберігаються під час надсилання звіту про збій.</string>
     <string name="read_privacy_policy">Ознайомитися з політикою конфіденційності</string>
-    <string name="app_license_title">Ліцензія NewPipe</string>
-    <string name="app_license">NewPipe — це copyleft libre програмне забезпечення: ви можете вільно використовувати, вивчати, поширювати та вдосконалювати його. Зокрема, ви можете розповсюджувати та/або змінювати його на умовах GNU General Public License, опублікованої Free Software Foundation, версії 3 або (на ваш вибір) будь-якої пізнішої версії.</string>
+    <string name="app_license_title">Ліцензія Rillvoro</string>
+    <string name="app_license">Rillvoro — це copyleft libre програмне забезпечення: ви можете вільно використовувати, вивчати, поширювати та вдосконалювати його. Зокрема, ви можете розповсюджувати та/або змінювати його на умовах GNU General Public License, опублікованої Free Software Foundation, версії 3 або (на ваш вибір) будь-якої пізнішої версії.</string>
     <string name="read_full_license">Ознайомитися з ліцензією</string>
     <string name="faq_title">Поширені запитання</string>
     <string name="faq_description">Якщо у вас виникають труднощі з використанням застосунку, обов’язково перегляньте відповіді на поширені запитання!</string>
@@ -215,7 +215,7 @@
     <string name="delete_search_history_alert">Видалити всю історію пошуку?</string>
     <string name="search_history_deleted">Історію пошуку видалено</string>
     <string name="clear_cookie_title">Очистити файли cookie reCAPTCHA</string>
-    <string name="clear_cookie_summary">Очищає файли cookie, які NewPipe зберігає, коли ви розв’язуєте reCAPTCHA</string>
+    <string name="clear_cookie_summary">Очищає файли cookie, які Rillvoro зберігає, коли ви розв’язуєте reCAPTCHA</string>
     <string name="recaptcha_cookies_cleared">Файли cookie reCAPTCHA очищено</string>
     <string name="always_use_exoplayer_set_output_surface_workaround_summary">Цей обхідний спосіб звільняє та повторно створює відеокодеки, коли змінюється поверхня відтворення, замість того щоб безпосередньо встановлювати нову поверхню для кодека. На деяких пристроях із такою проблемою цей механізм уже використовується в ExoPlayer. Налаштування діє лише на Android 6 і новіших версіях.\n\nУвімкнення цього параметра може запобігти помилкам відтворення під час перемикання поточного відеопрогравача або переходу в повноекранний режим.</string>
     <string name="downloads_storage_ask_summary">Вам буде запропоновано вибрати місце для збереження кожного завантаження.\nУвімкніть системний вибір папки (SAF), якщо хочете завантажувати файли на зовнішню SD-карту.</string>

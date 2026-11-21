@@ -2,7 +2,7 @@ package us.shandian.giga.io;
 
 import androidx.annotation.NonNull;
 
-import org.schabi.newpipe.streams.io.SharpStream;
+import io.github.culpen90.rillvoro.streams.io.SharpStream;
 
 import java.io.File;
 import java.io.FileNotFoundException;

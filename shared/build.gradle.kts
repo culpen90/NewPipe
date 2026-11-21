@@ -16,13 +16,19 @@ plugins {
 // Better than adding a third-party dependency for something as simple as this
 // https://stackoverflow.com/a/74771876/8446131
 val buildConfigGenerator by tasks.registering(Sync::class) {
-    val buildConfigPackage = NEWPIPE_APPLICATION_ID_NEW
+    val buildConfigPackage = RILLVORO_SHARED_NAMESPACE
+    val signerSha256 = providers.systemProperty("releaseCertSha256").getOrElse("").replace(":", "").lowercase()
+    require(signerSha256.isEmpty() || signerSha256.matches(Regex("[0-9a-f]{64}"))) {
+        "releaseCertSha256 must be a SHA-256 certificate fingerprint"
+    }
     val rawClass = """
         package $buildConfigPackage
 
         object BuildConfig {
-            const val VERSION_NAME = "$NEWPIPE_VERSION_NAME"
-            const val APP_NAME = "NewPipe"
+            const val VERSION_NAME = "$RILLVORO_VERSION_NAME"
+            const val APP_NAME = "Rillvoro"
+            const val ANDROID_APPLICATION_ID = "$RILLVORO_APPLICATION_ID"
+            const val ANDROID_RELEASE_CERT_SHA256 = "$signerSha256"
         }
     """.trimIndent()
     from(resources.text.fromString(rawClass)) {
@@ -47,14 +53,14 @@ kotlin {
     }
 
     android {
-        namespace = NEWPIPE_APPLICATION_ID_NEW
+        namespace = RILLVORO_SHARED_NAMESPACE
         compileSdk {
-            version = release(NEWPIPE_VERSION_SDK_COMPILE_MAJOR) {
-                minorApiLevel = NEWPIPE_VERSION_SDK_COMPILE_MINOR
+            version = release(RILLVORO_VERSION_SDK_COMPILE_MAJOR) {
+                minorApiLevel = RILLVORO_VERSION_SDK_COMPILE_MINOR
             }
         }
         minSdk {
-            version = release(NEWPIPE_VERSION_SDK_MIN)
+            version = release(RILLVORO_VERSION_SDK_MIN)
         }
         androidResources {
             enable = true
