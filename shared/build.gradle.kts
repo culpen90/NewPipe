@@ -10,7 +10,6 @@ plugins {
     alias(libs.plugins.jetbrains.compose.multiplatform)
     alias(libs.plugins.koin)
     alias(libs.plugins.jetbrains.kotlinx.serialization)
-    alias(libs.plugins.about.libraries)
 }
 
 // Better than adding a third-party dependency for something as simple as this
@@ -42,9 +41,6 @@ kotlin {
     jvmToolchain(21)
 
     compilerOptions {
-        freeCompilerArgs.addAll(
-            "-Xexpect-actual-classes"
-        )
         optIn.addAll(
             "androidx.compose.material3.ExperimentalMaterial3Api",
             "androidx.compose.material3.ExperimentalMaterial3ExpressiveApi",
@@ -73,27 +69,12 @@ kotlin {
             }
         }
 
-        withHostTest {
-            isIncludeAndroidResources = true
-        }
         withDeviceTestBuilder {
             sourceSetTreeName = "test"
         }.configure {
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
     }
-
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
-
-    jvm()
 
     sourceSets {
         commonMain {
@@ -121,11 +102,6 @@ kotlin {
                 implementation(libs.touchlab.kermit)
             }
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test.core)
-            implementation(libs.jetbrains.compose.test.ui)
-            implementation(libs.russhwolf.settings.test)
-        }
         androidMain.dependencies {
             implementation(libs.jetbrains.compose.preview)
             implementation(libs.androidx.activity)
@@ -135,6 +111,9 @@ kotlin {
         }
         val androidDeviceTest by getting {
             dependencies {
+                implementation(libs.kotlin.test.core)
+                implementation(libs.jetbrains.compose.test.ui)
+                implementation(libs.russhwolf.settings.test)
                 implementation(libs.androidx.compose.test.ui.manifest)
                 implementation(libs.androidx.compose.test.ui.junit)
 
@@ -143,23 +122,9 @@ kotlin {
                 implementation(libs.androidx.test.espresso.core)
             }
         }
-        val jvmTest by getting {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-            }
-        }
     }
 }
 
 dependencies {
     androidRuntimeClasspath(libs.jetbrains.compose.tooling)
-}
-
-aboutLibraries {
-    export {
-        outputFile = file("src/iosMain/resources/aboutlibraries.json")
-        prettyPrint = true
-        variant = "metadataIosMain"
-        excludeFields.addAll("organization", "scm", "funding")
-    }
 }

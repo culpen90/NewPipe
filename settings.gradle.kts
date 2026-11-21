@@ -22,9 +22,7 @@ dependencyResolutionManagement {
         maven(url = "https://repo.clojars.org")
     }
 }
-include(":app") // androidApp
-include(":desktopApp")
-include("shared")
+include(":app", ":shared")
 
 // Use a local copy of NewPipe Extractor by uncommenting the lines below.
 // We assume, that Rillvoro and NewPipe Extractor have the same parent directory.

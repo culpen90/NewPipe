@@ -5,8 +5,6 @@
 
 package io.github.culpen90.rillvoro.shared.platform
 
-import co.touchlab.kermit.Logger
-
 interface ContentActions {
     val usesSystemAppLanguageSettings: Boolean
 
@@ -21,23 +19,4 @@ interface ContentActions {
     fun applyYoutubeRestrictedMode(enabled: Boolean)
 
     fun applyContentLocalization()
-}
-
-internal object NoOpContentActions : ContentActions {
-
-    override val usesSystemAppLanguageSettings = false
-
-    override fun systemAppLanguageName(): String? = null
-
-    override fun openSystemAppLanguageSettings() = logUnsupported("openSystemAppLanguageSettings")
-
-    override fun applyAppLanguage(languageCode: String) = logUnsupported("applyAppLanguage")
-
-    override fun applyImageQuality(quality: String) = logUnsupported("applyImageQuality")
-
-    override fun applyYoutubeRestrictedMode(enabled: Boolean) = logUnsupported("applyYoutubeRestrictedMode")
-
-    override fun applyContentLocalization() = logUnsupported("applyContentLocalization")
-
-    private fun logUnsupported(action: String) = Logger.w(messageString = "Content action '$action' is unsupported on this platform")
 }

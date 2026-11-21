@@ -8,8 +8,7 @@ package io.github.culpen90.rillvoro.shared.platform
 import androidx.compose.runtime.Composable
 
 /**
- * Platform-specific contents of the player settings screen: ExoPlayer settings on Android,
- * and each other platform's own player settings once it has any.
+ * Supplies ExoPlayer settings for the player settings screen.
  */
 interface PlayerSettingsSections {
     val isAvailable: Boolean

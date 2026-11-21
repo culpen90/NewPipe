@@ -10,8 +10,7 @@ import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Module
 
 /**
- * Settings module to access key-value pairs across different platforms.
- * See individual platform packages for the declarations included in this module.
+ * Provides access to settings stored in Android SharedPreferences.
  */
 @Module
 @ComponentScan
