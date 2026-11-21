@@ -17,6 +17,7 @@ import static io.github.culpen90.rillvoro.player.helper.PlayerHelper.nextResizeM
 import static io.github.culpen90.rillvoro.player.helper.PlayerHelper.retrieveSeekDurationFromPreferences;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -39,15 +40,16 @@ import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.BitmapCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.math.MathUtils;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.widget.ImageViewCompat;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -75,6 +77,7 @@ import io.github.culpen90.rillvoro.player.Player;
 import io.github.culpen90.rillvoro.player.gesture.BasePlayerGestureListener;
 import io.github.culpen90.rillvoro.player.gesture.DisplayPortion;
 import io.github.culpen90.rillvoro.player.helper.PlayerHelper;
+import io.github.culpen90.rillvoro.player.helper.VolumeBoostAudioProcessor;
 import io.github.culpen90.rillvoro.player.mediaitem.MediaItemTag;
 import io.github.culpen90.rillvoro.player.playback.SurfaceHolderCallback;
 import io.github.culpen90.rillvoro.player.playqueue.PlayQueue;
@@ -211,6 +214,8 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
         binding.audioTrackTextView.setOnClickListener(
                 makeOnClickListener(this::onAudioTracksClicked));
         binding.playbackSpeed.setOnClickListener(makeOnClickListener(this::onPlaybackSpeedClicked));
+        binding.volumeBoostButton.setOnClickListener(
+                makeOnClickListener(this::onVolumeBoostClicked));
 
         binding.playbackSeekBar.setOnSeekBarChangeListener(this);
         binding.captionTextView.setOnClickListener(makeOnClickListener(this::onCaptionClicked));
@@ -253,7 +258,6 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
                 context.sendBroadcast(new Intent(VideoDetailFragment.ACTION_HIDE_MAIN_PLAYER)
                         .setPackage(App.PACKAGE_NAME))
         ));
-        binding.switchMute.setOnClickListener(makeOnClickListener(player::toggleMute));
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.itemsListPanel, (view, windowInsets) -> {
             final Insets cutout = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout());
@@ -288,6 +292,7 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
         binding.qualityTextView.setOnClickListener(null);
         binding.audioTrackTextView.setOnClickListener(null);
         binding.playbackSpeed.setOnClickListener(null);
+        binding.volumeBoostButton.setOnClickListener(null);
         binding.playbackSeekBar.setOnSeekBarChangeListener(null);
         binding.captionTextView.setOnClickListener(null);
         binding.resizeTextView.setOnClickListener(null);
@@ -313,7 +318,6 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
         binding.playWithKodi.setOnClickListener(null);
         binding.openInBrowser.setOnClickListener(null);
         binding.playerCloseButton.setOnClickListener(null);
-        binding.switchMute.setOnClickListener(null);
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.itemsListPanel, null);
 
@@ -431,7 +435,7 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
     }
 
     protected void setupElementsVisibility() {
-        setMuteButton(player.isMuted());
+        updateVolumeBoostButton();
         animateRotation(binding.moreOptionsButton, DEFAULT_CONTROLS_DURATION, 0);
     }
 
@@ -447,6 +451,7 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
         binding.audioTrackTextView.setPadding(buttonsPad, buttonsPad, buttonsPad, buttonsPad);
         binding.playbackSpeed.setPadding(buttonsPad, buttonsPad, buttonsPad, buttonsPad);
         binding.playbackSpeed.setMinimumWidth(buttonsMinWidth);
+        binding.volumeBoostButton.setPadding(buttonsPad, buttonsPad, buttonsPad, buttonsPad);
         binding.captionTextView.setPadding(buttonsPad, buttonsPad, buttonsPad, buttonsPad);
     }
     //endregion
@@ -843,6 +848,7 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
         super.onPrepared();
         setVideoDurationToControls((int) player.getExoPlayer().getDuration());
         binding.playbackSpeed.setText(formatSpeed(player.getPlaybackSpeed()));
+        updateVolumeBoostButton();
     }
 
     @Override
@@ -1020,12 +1026,7 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
     @Override
     public void onMuteUnmuteChanged(final boolean isMuted) {
         super.onMuteUnmuteChanged(isMuted);
-        setMuteButton(isMuted);
-    }
-
-    private void setMuteButton(final boolean isMuted) {
-        binding.switchMute.setImageDrawable(AppCompatResources.getDrawable(context, isMuted
-                ? R.drawable.ic_volume_off : R.drawable.ic_volume_up));
+        updateVolumeBoostButton();
     }
 
     private void setShuffleButton(final boolean shuffled) {
@@ -1305,6 +1306,35 @@ public abstract class VideoPlayerUi extends PlayerUi implements SeekBar.OnSeekBa
     }
 
     protected abstract void onPlaybackSpeedClicked();
+
+    protected abstract void onVolumeBoostClicked();
+
+    @Override
+    public void onVolumeBoostChanged() {
+        super.onVolumeBoostChanged();
+        updateVolumeBoostButton();
+    }
+
+    private void updateVolumeBoostButton() {
+        final boolean muted = player.isMuted();
+        final boolean boosting = player.isAutoVolumeBoostEnabled()
+                || player.getVolumeBoost() > VolumeBoostAudioProcessor.MINIMUM_VOLUME_BOOST;
+        binding.volumeBoostButton.setImageResource(muted
+                ? R.drawable.ic_volume_off : R.drawable.ic_volume_up);
+        ImageViewCompat.setImageTintList(binding.volumeBoostButton, ColorStateList.valueOf(
+                boosting && !muted
+                        ? ContextCompat.getColor(context, R.color.dark_settings_accent_color)
+                        : Color.WHITE));
+        final String state;
+        if (muted) {
+            state = context.getString(R.string.volume_muted);
+        } else if (player.isAutoVolumeBoostEnabled()) {
+            state = context.getString(R.string.volume_boost_auto);
+        } else {
+            state = PlayerHelper.formatPitch(player.getVolumeBoost());
+        }
+        ViewCompat.setStateDescription(binding.volumeBoostButton, state);
+    }
 
     private void onQualityClicked() {
         qualityPopupMenu.show();

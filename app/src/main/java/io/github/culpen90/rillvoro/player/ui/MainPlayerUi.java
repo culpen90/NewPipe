@@ -63,6 +63,7 @@ import io.github.culpen90.rillvoro.player.gesture.BasePlayerGestureListener;
 import io.github.culpen90.rillvoro.player.gesture.MainPlayerGestureListener;
 import io.github.culpen90.rillvoro.player.helper.PlaybackParameterDialog;
 import io.github.culpen90.rillvoro.player.helper.PlayerHelper;
+import io.github.culpen90.rillvoro.player.helper.VolumeBoostDialog;
 import io.github.culpen90.rillvoro.player.mediaitem.MediaItemTag;
 import io.github.culpen90.rillvoro.player.playqueue.PlayQueue;
 import io.github.culpen90.rillvoro.player.playqueue.PlayQueueAdapter;
@@ -309,7 +310,6 @@ public final class MainPlayerUi extends VideoPlayerUi implements View.OnLayoutCh
                 R.drawable.ic_expand_more));
         binding.share.setVisibility(View.VISIBLE);
         binding.openInBrowser.setVisibility(View.VISIBLE);
-        binding.switchMute.setVisibility(View.VISIBLE);
         binding.playerCloseButton.setVisibility(isFullscreen ? View.GONE : View.VISIBLE);
         // Top controls have a large minHeight which is allows to drag the player
         // down in fullscreen mode (just larger area to make easy to locate by finger)
@@ -883,6 +883,13 @@ public final class MainPlayerUi extends VideoPlayerUi implements View.OnLayoutCh
                                 player.getPlaybackPitch(), player.getPlaybackSkipSilence(),
                                 player::setPlaybackParameters)
                         .show(activity.getSupportFragmentManager(), null));
+    }
+
+    @Override
+    protected void onVolumeBoostClicked() {
+        getParentActivity().ifPresent(activity ->
+                VolumeBoostDialog.newInstance(player).show(activity.getSupportFragmentManager(),
+                        null));
     }
 
     @Override
