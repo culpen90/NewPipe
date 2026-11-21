@@ -29,8 +29,7 @@ interface DebugActions {
 }
 
 /**
- * Fallback for platforms with no debug tooling to drive, and for Android builds that ship without
- * the host-side bridge.
+ * Fallback for Android builds that ship without the host-side bridge.
  */
 internal object NoOpDebugActions : DebugActions {
     override val isLeakCanaryAvailable = false

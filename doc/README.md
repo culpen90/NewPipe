@@ -1,6 +1,6 @@
 <p align="center"><img src="/assets/rillvoro_icon.png" alt="Rillvoro" width="150"></p>
 <h2 align="center"><b>Rillvoro</b></h2>
-<h4 align="center">A libre lightweight streaming front-end for Android.</h4>
+<h4 align="center">A lightweight, libre streaming app built exclusively for Android.</h4>
 
 Rillvoro is an independent fork of [NewPipe](https://github.com/TeamNewPipe/NewPipe).
 
