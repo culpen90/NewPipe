@@ -62,6 +62,8 @@ Also, since they are free and open source software, neither the app nor the Extr
 
 ## Installation and updates
 
+On Android 6.0 or later, download the signed APK from the [latest GitHub release](https://github.com/culpen90/Rillvoro/releases/latest) and open it to install or update Rillvoro.
+
 To build the Android debug APK, install JDK 21 and the Android SDK, then run these commands.
 
 ```sh
